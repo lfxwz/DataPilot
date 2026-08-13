@@ -53,7 +53,40 @@ DATAPILOT_LLM_MODEL=deepseek-v4-flash
 Never commit `.env` or any credential file. DataPilot also supports loading a literal key from
 an external file through `DATAPILOT_LLM_CREDENTIALS_FILE`.
 
-## Start the project
+## Start with prebuilt Docker images
+
+The development-preview images are published on Docker Hub:
+
+- `docker.io/luyukang/datapilot-web:dev`
+- `docker.io/luyukang/datapilot-postgres:dev`
+- `docker.io/luyukang/datapilot-python-runtime:dev`
+
+Pull and start them without building locally:
+
+```powershell
+Set-Location path\to\DataPilot
+docker compose -f compose.release.yaml pull
+docker compose -f compose.release.yaml up -d
+```
+
+The current release layout still runs FastAPI on the host. Start it in a second PowerShell
+window after completing the Python setup above:
+
+```powershell
+conda activate datapilot
+Set-Location path\to\DataPilot
+python -m uvicorn datapilot.main:app --reload
+```
+
+Open the workbench at <http://127.0.0.1:5173>.
+
+Stop the release containers with:
+
+```powershell
+docker compose -f compose.release.yaml stop
+```
+
+## Start from source for development
 
 Start Docker Desktop, then run:
 
@@ -62,7 +95,7 @@ Set-Location path\to\DataPilot
 docker compose up -d
 ```
 
-The default Compose project starts exactly three services:
+The source-based Compose project starts exactly three services:
 
 - `web`: production frontend at `http://127.0.0.1:5173`
 - `postgres`: local PostgreSQL at `127.0.0.1:5432`
