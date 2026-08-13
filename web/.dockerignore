@@ -1,0 +1,10 @@
+node_modules
+.next
+.vinext
+dist
+.wrangler
+outputs
+work
+.env*
+npm-debug.log*
+Dockerfile*
