@@ -65,12 +65,16 @@ Pull and start them without building locally:
 
 ```powershell
 Set-Location path\to\DataPilot
-docker compose -f compose.release.yaml pull
-docker compose -f compose.release.yaml up -d
+.\start.ps1
 ```
 
-The current release layout still runs FastAPI on the host. Start it in a second PowerShell
-window after completing the Python setup above:
+On the first run, the script creates `.venv`, installs the host-side backend, pulls the three
+published images, starts the containers, and runs FastAPI in the foreground. If `.env` does not
+exist, the script creates it and asks you to add your model API settings before continuing.
+It also verifies that the selected Python interpreter is version 3.11 or 3.12.
+
+The current release layout still runs FastAPI on the host. Keep the PowerShell window open while
+using DataPilot. The equivalent manual backend command is:
 
 ```powershell
 conda activate datapilot
@@ -83,8 +87,21 @@ Open the workbench at <http://127.0.0.1:5173>.
 Stop the release containers with:
 
 ```powershell
-docker compose -f compose.release.yaml stop
+.\stop.ps1
 ```
+
+Use `.\start.ps1 -SkipPull` when the required images are already present and you do not want to
+check Docker Hub for updates.
+
+After placing all nine Olist CSV files under `data/raw/olist`, initialize or refresh the demo
+dataset with:
+
+```powershell
+.\start.ps1 -SkipPull -LoadOlist
+```
+
+`-LoadOlist` truncates and reloads the Olist tables in one transaction. Omit it during ordinary
+startup so existing data is left unchanged.
 
 ## Start from source for development
 
