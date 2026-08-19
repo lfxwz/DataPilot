@@ -234,6 +234,10 @@ Set-Location path\to\DataPilot
 docker compose config --quiet
 ```
 
+## Contact
+
+For questions or feedback, contact [yukang.lu@outlook.com](mailto:yukang.lu@outlook.com).
+
 ## License
 
 DataPilot source code is licensed under the [Apache License 2.0](LICENSE). The Olist dataset
